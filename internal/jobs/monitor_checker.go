@@ -34,7 +34,7 @@ func (mc *MonitorChecker) CheckMonitors() {
 				status = "DOWN"
 			}
 
-			log.Printf("Checked %s: %s (%.2fms)", monitor.URL, status, duration.Milliseconds())
+			log.Printf("Checked %s: %s (%d)", monitor.URL, status, duration.Milliseconds())
 
 			mc.service.SaveCheckResult(monitor.ID, status, duration.Milliseconds())
 		}(monitor)
@@ -46,11 +46,8 @@ func (mc *MonitorChecker) CheckMonitors() {
 func (mc *MonitorChecker) Run() {
 	ticker := time.NewTicker(1 * time.Minute)
 
-	for {
-		select {
-		case <-ticker.C:
-			log.Println("Running monitor checker...")
-			mc.CheckMonitors()
-		}
+	for range ticker.C {
+		log.Println("Running monitor checker...")
+		mc.CheckMonitors()
 	}
 }
