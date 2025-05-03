@@ -19,7 +19,7 @@ func NewMonitorChecker(ms services.MonitorServiceInterface) *MonitorChecker {
 func (mc *MonitorChecker) CheckMonitors() {
 	monitors, err := mc.service.GetDueMonitors()
 	if err != nil {
-		log.Printf("Error fetching monitors: v", err)
+		log.Printf("Error fetching monitors: %v", err)
 		return
 	}
 
